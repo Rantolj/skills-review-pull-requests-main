@@ -3,7 +3,10 @@ name: Auto Commit Daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # runs once per day at 00:00 UTC (change as needed)
+    - cron: "0 0 * * *" # runs once per day at 00:00 UTC (change as needed)
+
+permissions:
+  contents: write
 
 jobs:
   autocommit:
@@ -12,6 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
 
       - name: Random delay (0-59 minutes)
@@ -24,7 +28,9 @@ jobs:
       - name: Make a random number of commits (1-20)
         env:
           GIT_COMMITTER_NAME: "Miranto"
-          GIT_COMMITTER_EMAIL: "Rantolj@users.noreply.github.com"
+          GIT_COMMITTER_EMAIL: "rantolanja@gmail.com"
+          GIT_AUTHOR_NAME: "Miranto"
+          GIT_AUTHOR_EMAIL: "rantolanja@gmail.com"
         run: |
           set -euo pipefail
           # choose a random count between 1 and 20
